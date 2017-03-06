@@ -77,3 +77,50 @@ foreach($directory->read() as $file){
 }
 
 ```
+
+### API
+#### `FSDriverInterface` methods
+method | return 
+------ | ------
+`fileExists(string $path)` | bool
+`isFile(string $path)` | bool
+`fileContents(string $path)` | string
+`getRequire(string $path)` | mixed
+`deleteFile(string $path)` | bool
+`copyFile(string $source, string $destination, bool $overwrite = true)` | bool
+`isDir(string $path)` | bool
+`makeDir(string $path)` | bool
+`deleteDir(string $path)` | bool
+`rename(string $oldname, string $newname, bool $overwrite = true)` | bool
+
+#### `Directory` public methods
+method | return 
+------ | ------
+`__construct(FSDriverInterface $driver, string $path)` | -
+`change(string $path)` | `Directory`
+`read()` | array of `File` objects
+`create(string $subdir = null)` | bool
+`delete(string $subdir = null)` | bool
+`rename(string $newname, bool $overwrite = true)` | `Directory`
+
+#### `File` public methods
+method | return 
+------ | ------
+`__construct(FSDriverInterface $driver, Directory $directory, string $name)` | -
+`exists()` | bool
+`content()` | string
+`getRequire()` | mixed
+`copy(string $destination, bool $overwrite = true)` | bool
+`rename(string $newname, bool $overwrite = true)` | `File`
+`delete()` | bool
+
+### common magic properties of `Directory` and `File`
+property | type | description
+-------- | ---- | ----------- 
+`$path` | string | the full path to the resource
+
+### additional magic properties of `File`
+property | type | description
+-------- | ---- | ----------- 
+`$name` | string | the basename of the file
+`$directory` | `Directory` | the `Directory` which contains the file
