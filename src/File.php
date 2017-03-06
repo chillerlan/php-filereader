@@ -88,6 +88,10 @@ class File extends FSAbstract{
 			throw new FilereaderException('cannot rename '.$this->path.' to '.$newname); // @codeCoverageIgnore
 		}
 
+		if(!$this->filereader->isFile($newname)){
+			throw new FilereaderException('file not found: '.$newname); // @codeCoverageIgnore
+		}
+
 		$this->path = $newname;
 
 		$info = pathinfo($this->path);
