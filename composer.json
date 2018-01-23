@@ -1,20 +1,26 @@
 {
 	"name": "chillerlan/php-filereader",
 	"description": "A simple filereader. PHP 7+",
-	"homepage": "https://github.com/codemasher/php-filereader",
+	"homepage": "https://github.com/chillerlan/php-filereader",
 	"license": "MIT",
 	"type": "library",
 	"authors": [
 		{
 			"name": "Smiley",
-			"email": "smiley@chillerlan.net"
+			"email": "smiley@chillerlan.net",
+			"homepage": "https://github.com/codemasher"
 		}
 	],
+	"support": {
+		"issues": "https://github.com/chillerlan/php-filereader/issues",
+		"source": "https://github.com/chillerlan/php-filereader"
+	},
+	"minimum-stability": "stable",
 	"require": {
 		"php": ">=7.0.3"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "6.0.*"
+		"phpunit/phpunit": "^6.5"
 	},
 	"autoload": {
 		"psr-4": {
