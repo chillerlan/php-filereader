@@ -1,61 +1,58 @@
-# codemasher/php-filereader
+# chillerlan/php-filereader
+A simple file/directory reader for all (well, most... ok. some.) of your file-reading needs.
 
 [![version][packagist-badge]][packagist]
 [![license][license-badge]][license]
 [![Travis][travis-badge]][travis]
 [![Coverage][coverage-badge]][coverage]
 [![Scrunitizer][scrutinizer-badge]][scrutinizer]
-[![Code Climate][codeclimate-badge]][codeclimate]
+[![Packagist downloads][downloads-badge]][downloads]
+[![PayPal donate][donate-badge]][donate]
 
-[packagist-badge]: https://img.shields.io/packagist/v/chillerlan/php-filereader.svg
+[packagist-badge]: https://img.shields.io/packagist/v/chillerlan/php-filereader.svg?style=flat-square
 [packagist]: https://packagist.org/packages/chillerlan/php-filereader
-[license-badge]: https://img.shields.io/packagist/l/chillerlan/php-filereader.svg
-[license]: https://github.com/codemasher/php-filereader/blob/master/LICENSE
-[travis-badge]: https://img.shields.io/travis/codemasher/php-filereader.svg
-[travis]: https://travis-ci.org/codemasher/php-filereader
-[coverage-badge]: https://img.shields.io/codecov/c/github/codemasher/php-filereader.svg
-[coverage]: https://codecov.io/github/codemasher/php-filereader
-[scrutinizer-badge]: https://img.shields.io/scrutinizer/g/codemasher/php-filereader.svg
-[scrutinizer]: https://scrutinizer-ci.com/g/codemasher/php-filereader
-[codeclimate-badge]: https://img.shields.io/codeclimate/github/codemasher/php-filereader.svg
-[codeclimate]: https://codeclimate.com/github/codemasher/php-filereader
+[license-badge]: https://img.shields.io/github/license/chillerlan/php-filereader.svg?style=flat-square
+[license]: https://github.com/chillerlan/php-filereader/blob/master/LICENSE
+[travis-badge]: https://img.shields.io/travis/chillerlan/php-filereader.svg?style=flat-square
+[travis]: https://travis-ci.org/chillerlan/php-filereader
+[coverage-badge]: https://img.shields.io/codecov/c/github/chillerlan/php-filereader.svg?style=flat-square
+[coverage]: https://codecov.io/github/chillerlan/php-filereader
+[scrutinizer-badge]: https://img.shields.io/scrutinizer/g/chillerlan/php-filereader.svg?style=flat-square
+[scrutinizer]: https://scrutinizer-ci.com/g/chillerlan/php-filereader
+[downloads-badge]: https://img.shields.io/packagist/dt/chillerlan/php-filereader.svg?style=flat-square
+[downloads]: https://packagist.org/packages/chillerlan/database/stats
+[donate-badge]: https://img.shields.io/badge/donate-paypal-ff33aa.svg?style=flat-square
+[donate]: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WLYUNAT9ZTJZ4
 
-##Info
-
-A simple file/directory reader for all (well, most...) of your file-reading needs.
-
-## Requirements
+# Requirements
 - PHP 7+
 
-## Documentation
+# Documentation
 
-### Installation
-#### Using [composer](https://getcomposer.org)
+## Installation
+**requires [composer](https://getcomposer.org)**
 
-*Terminal*
-```sh
-composer require chillerlan/php-filereader:dev-master
-```
-
-*composer.json*
+### *composer.json*
+ (note: replace `dev-master` with a [version boundary](https://getcomposer.org/doc/articles/versions.md#summary))
 ```json
 {
 	"require": {
-		"php": ">=7.0.3",
-		"chillerlan/php-filereader": "dev-master"
+		"php": ">=7.2.0",
+		"chillerlan/database": "dev-master"
 	}
 }
 ```
 
-#### Manual installation
-Download the desired version of the package from [master](https://github.com/codemasher/php-filereader/archive/master.zip) or 
-[release](https://github.com/codemasher/php-filereader/releases) and extract the contents to your project folder. 
-Point the namespace `chillerlan\Filereader` to the folder `src` of the package.
+### Manual installation
+Download the desired version of the package from [master](https://github.com/chillerlan/php-filereader/archive/master.zip) or 
+[release](https://github.com/chillerlan/php-filereader/releases) and extract the contents to your project folder. After that:
+  - run `composer install` to install the required dependencies and generate `/vendor/autoload.php`.
+  - if you use a custom autoloader, point the namespace `chillerlan\Filereader` to the folder `src` of the package 
 
 Profit!
 
-### Usage
-#### simple
+## Usage
+### simple
 You can just invoke one a `FSDriverInterface` and use it right away:
 
 ```php
@@ -66,7 +63,7 @@ $filereader->isDir('/some/path');
 
 ```
 
-#### advanced
+### advanced
 ```php
 $directory = new Directory($filereader, '/some/path');
 
@@ -78,8 +75,8 @@ foreach($directory->read() as $file){
 
 ```
 
-### API
-#### `FSDriverInterface` methods
+## API
+### `FSDriverInterface` methods
 method | return 
 ------ | ------
 `fileExists(string $path)` | bool
@@ -93,7 +90,7 @@ method | return
 `deleteDir(string $path)` | bool
 `rename(string $oldname, string $newname, bool $overwrite = true)` | bool
 
-#### `Directory` public methods
+### `Directory` public methods
 method | return 
 ------ | ------
 `__construct(FSDriverInterface $driver, string $path)` | -
@@ -103,7 +100,7 @@ method | return
 `delete(string $subdir = null)` | bool
 `rename(string $newname, bool $overwrite = true)` | `Directory`
 
-#### `File` public methods
+### `File` public methods
 method | return 
 ------ | ------
 `__construct(FSDriverInterface $driver, Directory $directory, string $name)` | -
