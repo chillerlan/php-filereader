@@ -38,7 +38,8 @@ class File extends FSAbstract{
 	 * @param string                                           $name
 	 */
 	public function __construct(FSDriverInterface $driver, Directory $directory, string $name){
-		$this->filereader = $driver;
+		parent::__construct($driver);
+
 		$this->directory  = $directory;
 		$this->name       = $name;
 		$this->path       = $this->directory->path.DIRECTORY_SEPARATOR.$this->name;

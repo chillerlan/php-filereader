@@ -14,9 +14,6 @@ namespace chillerlan\Filereader;
 
 use chillerlan\Filereader\Drivers\FSDriverInterface;
 
-/**
- *
- */
 class Directory extends FSAbstract{
 
 	/**
@@ -26,8 +23,9 @@ class Directory extends FSAbstract{
 	 * @param string                                           $path
 	 */
 	public function __construct(FSDriverInterface $driver, string $path){
-		$this->filereader = $driver;
-		$this->path       = $path;
+		parent::__construct($driver);
+
+		$this->path = $path;
 	}
 
 	/**

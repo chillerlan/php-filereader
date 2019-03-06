@@ -14,6 +14,7 @@ namespace chillerlan\FilereaderTest;
 
 use chillerlan\Filereader\Directory;
 use chillerlan\Filereader\Drivers\DiskDriver;
+use chillerlan\Filereader\FilereaderException;
 use PHPUnit\Framework\TestCase;
 
 class DirectoryTest extends TestCase{
@@ -25,7 +26,7 @@ class DirectoryTest extends TestCase{
 	 */
 	protected $directory;
 
-	protected function setUp(){
+	protected function setUp():void{
 		$this->directory = new Directory(new DiskDriver, self::TEST_DIR);
 	}
 
@@ -33,15 +34,13 @@ class DirectoryTest extends TestCase{
 		/** @var \chillerlan\Filereader\File $file */
 		foreach($this->directory->read() as $file){
 			$this->assertSame(self::TEST_DIR, $file->directory->path);
-			$this->assertTrue(in_array($file->name, ['testfile.txt', 'testscript.php']));
 		}
 	}
 
-	/**
-	 * @expectedException \chillerlan\Filereader\FilereaderException
-	 * @expectedExceptionMessage Directory not found: foo
-	 */
 	public function testReadNotFoundException(){
+		$this->expectException(FilereaderException::class);
+		$this->expectExceptionMessage('Directory not found: foo');
+
 		(new Directory(new DiskDriver, 'foo'))->read();
 	}
 

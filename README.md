@@ -25,7 +25,7 @@ A simple file/directory reader for all (well, most... ok. some.) of your file-re
 [donate]: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WLYUNAT9ZTJZ4
 
 # Requirements
-- PHP 7+
+- PHP 7.2+
 
 # Documentation
 

@@ -36,7 +36,7 @@ class FileTest extends TestCase{
 	 */
 	protected $filereader;
 
-	protected function setUp(){
+	protected function setUp():void{
 		$this->filereader = new DiskDriver;
 		$this->directory  = new Directory($this->filereader, self::TEST_DIR);
 		$this->file       = new File($this->filereader, $this->directory, 'testscript.php');
@@ -78,10 +78,10 @@ class FileTest extends TestCase{
 		$this->assertSame(self::TEST_DIR, $this->file->directory->path);
 	}
 
-
 	public function testDelete(){
 		$this->file = new File($this->filereader, $this->directory, '.testcopy');
 
 		$this->assertTrue($this->file->delete());
 	}
+
 }

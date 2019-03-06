@@ -177,4 +177,54 @@ class DiskDriver implements FSDriverInterface{
 		return copy($source, $destination);
 	}
 
+	/**
+	 * @param string $path
+	 * @param string $data
+	 * @param bool   $overwrite
+	 *
+	 * @return int|bool
+	 * @throws \chillerlan\Filereader\FilereaderException
+	 */
+	public function write(string $path, string $data, bool $overwrite = true){
+
+		if(!$overwrite && $this->fileExists($path)){
+			throw new FilereaderException('Destination file already exists.');
+		}
+
+		return file_put_contents($path, $data);
+	}
+
+	/**
+	 * @param string $path
+	 *
+	 * @return int|null
+	 */
+	public function fileModifyTime(string $path):?int{
+		return filemtime($path);
+	}
+
+	/**
+	 * @param string $path
+	 *
+	 * @return bool
+	 * @throws \chillerlan\Filereader\FilereaderException
+	 */
+	public function isWritable(string $path):bool{
+
+		if(!$this->isDir($path)){
+			throw new FilereaderException('Directory not found: '.$path);
+		}
+
+		return is_writable($path);
+	}
+
+	/**
+	 * @param string $pattern
+	 *
+	 * @return array
+	 */
+	public function findFiles(string $pattern):array {
+		return glob($pattern);
+	}
+
 }

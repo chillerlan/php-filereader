@@ -116,4 +116,29 @@ interface FSDriverInterface{
 	 * @return bool
 	 */
 	public function copyFile(string $source, string $destination, bool $overwrite = true):bool;
+
+	/**
+	 * @param string $path
+	 * @param string $data
+	 * @param bool   $overwrite
+	 *
+	 * @return int|bool
+	 * @throws \chillerlan\Filereader\FilereaderException
+	 */
+	public function write(string $path, string $data, bool $overwrite = true);
+
+	/**
+	 * @param string $path
+	 *
+	 * @return int|null
+	 */
+	public function fileModifyTime(string $path):?int;
+
+	/**
+	 * @param string $path
+	 *
+	 * @return bool
+	 * @throws \chillerlan\Filereader\FilereaderException
+	 */
+	public function isWritable(string $path):bool;
 }

@@ -18,7 +18,7 @@ class DiskDriverTest extends DriverTestAbstract{
 
 	protected $test_dir = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'test';
 
-	protected function setUp(){
+	protected function setUp():void{
 		$this->filereader = new DiskDriver;
 	}
 
@@ -78,4 +78,9 @@ class DiskDriverTest extends DriverTestAbstract{
 		];
 	}
 
+	public function writeDataProvider(){
+		return [
+			[$this->test_dir.DIRECTORY_SEPARATOR.'testwrite.txt', 'testwrite.txt'],
+		];
+	}
 }

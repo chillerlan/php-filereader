@@ -12,10 +12,12 @@
 
 namespace chillerlan\Filereader;
 
+use chillerlan\Filereader\Drivers\FSDriverInterface;
+
 /**
  * @property string $path
  */
-abstract class FSAbstract{
+abstract class FSAbstract implements FSInterface{
 
 	/**
 	 * @var \chillerlan\Filereader\Drivers\FSDriverInterface
@@ -28,6 +30,15 @@ abstract class FSAbstract{
 	protected $path;
 
 	/**
+	 * FSAbstract constructor.
+	 *
+	 * @param \chillerlan\Filereader\Drivers\FSDriverInterface $driver
+	 */
+	public function __construct(FSDriverInterface $driver){
+		$this->filereader = $driver;
+	}
+
+	/**
 	 * @param string $name
 	 *
 	 * @return mixed
@@ -38,22 +49,14 @@ abstract class FSAbstract{
 			return $this->{$name};
 		}
 
-		return false;
+		return null;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function info():array {
+	public function info():array{
 		return pathinfo($this->path);
 	}
-
-	/**
-	 * @param string $newname
-	 * @param bool   $overwrite
-	 *
-	 * @return \chillerlan\Filereader\Directory|\chillerlan\Filereader\File
-	 */
-	abstract public function rename(string $newname, bool $overwrite = true);
 
 }

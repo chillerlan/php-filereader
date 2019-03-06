@@ -12,6 +12,7 @@
 
 namespace chillerlan\FilereaderTest\Drivers;
 
+use chillerlan\Filereader\FilereaderException;
 use PHPUnit\Framework\TestCase;
 
 abstract class DriverTestAbstract extends TestCase{
@@ -38,6 +39,7 @@ abstract class DriverTestAbstract extends TestCase{
 	abstract public function deleteFileDataProvider();
 	abstract public function renameFileDataProvider();
 	abstract public function renameFileExceptionDataProvider();
+	abstract public function writeDataProvider();
 
 	/**
 	 * @dataProvider fileDataProvider
@@ -72,18 +74,17 @@ abstract class DriverTestAbstract extends TestCase{
 	/**
 	 * @dataProvider fileContentDataProvider
 	 *
-	 * @param        $expected
+	 * @param string $expected
 	 * @param string $file
 	 */
-	public function testFileContents($expected, string $file){
+	public function testFileContents(string $expected, string $file){
 		$this->assertSame($expected, $this->filereader->fileContents($file));
 	}
 
-	/**
-	 * @expectedException \chillerlan\Filereader\FilereaderException
-	 * @expectedExceptionMessage File not found: foo.bar
-	 */
 	public function testFileContentsNotFoundException(){
+		$this->expectException(FilereaderException::class);
+		$this->expectExceptionMessage('File not found: foo.bar');
+
 		$this->filereader->fileContents('foo.bar');
 	}
 
@@ -97,11 +98,10 @@ abstract class DriverTestAbstract extends TestCase{
 		$this->assertSame($expected, $this->filereader->getRequire($file));
 	}
 
-	/**
-	 * @expectedException \chillerlan\Filereader\FilereaderException
-	 * @expectedExceptionMessage File not found: foo.bar
-	 */
 	public function testGetRequireNotFoundException(){
+		$this->expectException(FilereaderException::class);
+		$this->expectExceptionMessage('File not found: foo.bar');
+
 		$this->filereader->getRequire('foo.bar');
 	}
 
@@ -114,11 +114,10 @@ abstract class DriverTestAbstract extends TestCase{
 		$this->assertTrue($this->filereader->makeDir($dir));
 	}
 
-	/**
-	 * @expectedException \chillerlan\Filereader\FilereaderException
-	 * @expectedExceptionMessage Directory already exists:
-	 */
 	public function testMakeDirExistsException(){
+		$this->expectException(FilereaderException::class);
+		$this->expectExceptionMessage('Directory already exists:');
+
 		$this->filereader->makeDir($this->test_dir);
 	}
 
@@ -135,13 +134,13 @@ abstract class DriverTestAbstract extends TestCase{
 	/**
 	 * @dataProvider             fileCopyDataProvider
 	 *
-	 * @expectedException \chillerlan\Filereader\FilereaderException
-	 * @expectedExceptionMessage Destination file already exists.
-	 *
 	 * @param string $src
 	 * @param string $dest
 	 */
 	public function testCopyFileExistsException(string $src, string $dest){
+		$this->expectException(FilereaderException::class);
+		$this->expectExceptionMessage('Destination file already exists.');
+
 		$this->filereader->copyFile($src, $dest, false);
 	}
 
@@ -160,11 +159,11 @@ abstract class DriverTestAbstract extends TestCase{
 	 *
 	 * @param string $oldname
 	 * @param string $newname
-	 *
-	 * @expectedException \chillerlan\Filereader\FilereaderException
-	 * @expectedExceptionMessage Destination already exists.
 	 */
 	public function testRenameExistsException(string $oldname, string $newname){
+		$this->expectException(FilereaderException::class);
+		$this->expectExceptionMessage('Destination already exists.');
+
 		$this->assertTrue($this->filereader->rename($oldname, $newname, false));
 	}
 
@@ -181,11 +180,11 @@ abstract class DriverTestAbstract extends TestCase{
 	 * @dataProvider deleteFileDataProvider
 	 *
 	 * @param string $file
-	 *
-	 * @expectedException \chillerlan\Filereader\FilereaderException
-	 * @expectedExceptionMessage File not found:
 	 */
 	public function testDeleteFileNotFoundException(string $file){
+		$this->expectException(FilereaderException::class);
+		$this->expectExceptionMessage('File not found:');
+
 		$this->filereader->deleteFile($file);
 	}
 
@@ -194,7 +193,7 @@ abstract class DriverTestAbstract extends TestCase{
 	 *
 	 * @param string $dir
 	 */
-	public function testDeleteDir($dir){
+	public function testDeleteDir(string $dir){
 		$this->assertTrue($this->filereader->deleteDir($dir));
 	}
 
@@ -202,12 +201,38 @@ abstract class DriverTestAbstract extends TestCase{
 	 * @dataProvider makeDirDataProvider
 	 *
 	 * @param string $dir
-	 *
-	 * @expectedException \chillerlan\Filereader\FilereaderException
-	 * @expectedExceptionMessage Directory not found:
 	 */
 	public function testDeleteDirNotFoundException($dir){
+		$this->expectException(FilereaderException::class);
+		$this->expectExceptionMessage('Directory not found:');
+
 		$this->filereader->deleteDir($dir);
+	}
+
+	/**
+	 * @dataProvider writeDataProvider
+	 *
+	 * @param string $filepath
+	 * @param string $data
+	 */
+	public function testWrite(string $filepath, string $data){
+		$expectedBytes = strlen($data);
+		$bytesWritten  = $this->filereader->write($filepath, $data);
+
+		$this->assertSame($expectedBytes, $bytesWritten);
+	}
+
+	/**
+	 * @dataProvider writeDataProvider
+	 *
+	 * @param string $filepath
+	 * @param string $data
+	 */
+	public function testWriteFileExistsException(string $filepath, string $data){
+		$this->expectException(FilereaderException::class);
+		$this->expectExceptionMessage('Destination file already exists.');
+
+		$this->filereader->write($filepath, $data, false);
 	}
 
 }

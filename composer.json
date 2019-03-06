@@ -1,6 +1,6 @@
 {
 	"name": "chillerlan/php-filereader",
-	"description": "A simple filereader. PHP 7+",
+	"description": "A simple filereader. PHP 7.2+",
 	"homepage": "https://github.com/chillerlan/php-filereader",
 	"license": "MIT",
 	"type": "library",
@@ -17,10 +17,10 @@
 	},
 	"minimum-stability": "stable",
 	"require": {
-		"php": ">=7.0.3"
+		"php": "^7.2"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^6.5"
+		"phpunit/phpunit": "^8.0"
 	},
 	"autoload": {
 		"psr-4": {
